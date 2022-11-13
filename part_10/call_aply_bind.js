@@ -1,25 +1,25 @@
 const lufthansa = {
-    airline: "Lufthansa",
-    iataCode: "LH",
-    bookings: [],
-    book(flightNum, passenger) {
-        console.log(
-            `${passenger} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
-        );
-        this.bookings.push({
-            flight: `${this.iataCode}${flightNum}`,
-            passenger,
-        });
-    },
+	airline: "Lufthansa",
+	iataCode: "LH",
+	bookings: [],
+	book(flightNum, passenger) {
+		console.log(
+			`${passenger} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+		);
+		this.bookings.push({
+			flight: `${this.iataCode}${flightNum}`,
+			passenger,
+		});
+	},
 };
 
 lufthansa.book(239, "Kika Andersson");
 lufthansa.book(365, "Sisa");
 
 const eurowings = {
-    name: "Eurowings",
-    iataCode: "EW",
-    bookings: [],
+	name: "Eurowings",
+	iataCode: "EW",
+	bookings: [],
 };
 
 const book = lufthansa.book;
@@ -32,9 +32,9 @@ console.log(lufthansa);
 
 // APPLY METHOD
 const swiss = {
-    name: "Swiss Air Lines",
-    iataCode: "LX",
-    bookings: [],
+	name: "Swiss Air Lines",
+	iataCode: "LX",
+	bookings: [],
 };
 
 const flightData = [777, "Sandra"];
@@ -59,15 +59,28 @@ console.log(eurowings);
 // BIND METHOD WITH EVENT LISTENERS
 lufthansa.planes = 300;
 lufthansa.byPlane = function () {
-    console.log(this);
-    this.planes++;
-    console.log(`This company ${this.name} has ${this.planes} planes!`);
+	console.log(this);
+	this.planes++;
+	console.log(`This company ${this.name} has ${this.planes} planes!`);
 };
 
 document
-    .querySelector(".buy")
-    .addEventListener("click", lufthansa.byPlane.bind(lufthansa));
+	.querySelector(".buy")
+	.addEventListener("click", lufthansa.byPlane.bind(lufthansa));
 
 // BIND METHOD WITH PARTIAL APPLICATION (preset parameters);
 const addTax = (rate, value) => value + value * rate;
 console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+console.log(addVAT(100)); // 123
+
+// challenge
+const challenge = (rate) => {
+	return (value) => {
+		console.log(value + value * rate);
+	};
+};
+
+const addVAT2 = challenge(0.23);
+addVAT2(200);
