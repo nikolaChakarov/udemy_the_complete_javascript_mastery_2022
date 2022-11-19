@@ -1,6 +1,5 @@
 "use strict";
 
-///////////////////////////////////////
 // Modal window
 
 const modal = document.querySelector(".modal");
@@ -9,69 +8,147 @@ const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
 
 const openModal = function (e) {
-	e.preventDefault();
-	modal.classList.remove("hidden");
-	overlay.classList.remove("hidden");
+    e.preventDefault();
+    modal.classList.remove("hidden");
+    overlay.classList.remove("hidden");
 };
 
 const closeModal = function () {
-	modal.classList.add("hidden");
-	overlay.classList.add("hidden");
+    modal.classList.add("hidden");
+    overlay.classList.add("hidden");
 };
 
 btnsOpenModal.forEach((btn) => btn.addEventListener("click", openModal));
-// for (let i = 0; i < btnsOpenModal.length; i++)
-// 	btnsOpenModal[i].addEventListener("click", openModal);
 
 btnCloseModal.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
 
 document.addEventListener("keydown", function (e) {
-	if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-		closeModal();
-	}
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+        closeModal();
+    }
 });
 
-//////////////////////////////////////////////////
+// SCROLL INTO WIEW
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
 
-// Selecting elements
-console.log(document.documentElement);
-console.log(document.head);
-console.log(document.body);
+btnScrollTo.addEventListener("click", function () {
+    section1.scrollIntoView({ behavior: "smooth" });
+});
 
-const header = document.querySelector(".header");
-const allSelections = document.querySelectorAll(".section"); // returns NodeList
-console.log(allSelections);
+// Page navigation
+const navLinks = document.querySelectorAll(".nav__link");
+// navLinks.forEach(function (el) {
+//     el.addEventListener("click", function (e) {
+//         e.preventDefault();
 
-document.getElementById("section--1");
-const allButtons = document.getElementsByTagName("button"); // returns HTMLCollection whitch is updated automatically
-console.log(allButtons);
+//         const hrefAttr = this.getAttribute("href");
+//         const sectionToScroll = document.querySelector(hrefAttr);
 
-const classes = document.getElementsByClassName("btn"); // returns HTMLCollection whitch is updated automatically
-console.log(classes);
+//         sectionToScroll.scrollIntoView({ behavior: "smooth" });
+//     });
+// });
 
-// Creating and Inserting elements
-const message = document.createElement("div");
-message.classList.add("cookie-message");
-// message.textContent = "We use cookies for improve functionality and analytics.";
-message.innerHTML =
-	"We use cookies for improve functionality and analytics. <button class='btn btn--close-cookie'>Got it!</button>";
+// Whit  EVENT DELEGATION  we need two steps:
+// 1. we add the event listener to the common parent element of all the elements that we are interested in
+// 2. in the event listener determine what originated the event, so we can  then work with that element where the event were actually created.
+const ulEl = document.querySelector(".nav__links");
+ulEl.addEventListener("click", function (e) {
+    e.preventDefault();
+    // Matching strategy
+    if (
+        e.target.classList.contains("nav__link") &&
+        e.target.classList.length === 1
+    ) {
+        const id = e.target.getAttribute("href");
+        const elToScroll = document.querySelector(id);
 
-// the dom node is unique, it means one node can be at one place only at the time
-// header.prepend(message); // prepend() -> add node as first child of the element
-header.append(message); // append() -> add node as last child of the element
-// if we want a copy, we must clone the element
-// header.prepend(message.cloneNode(true));
+        elToScroll.scrollIntoView({ behavior: "smooth" });
+    }
+});
 
-header.after(message); // the same rulles apply here with the clone element if needed.
-header.before(message);
+// Tabbed container
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabs = document.querySelectorAll(".operations__tab");
+const operationsContent = document.querySelectorAll(".operations__content");
 
-// delete element
-document
-	.querySelector(".btn--close-cookie")
-	.addEventListener("click", function () {
-		message.remove();
-	});
+// event delegation
+tabsContainer.addEventListener("click", function (e) {
+    // traversing the DOM upwards;
+    const clicked = e.target.closest(".operations__tab");
+    // Guard clause
+    if (!clicked) return;
 
-// Styles
-message.style.backgroundColor = "#37383d";
+    // Active tab
+    tabs.forEach((t) => t.classList.remove("operations__tab--active"));
+    clicked.classList.add("operations__tab--active");
+
+    // Activate content area
+    const contentId = clicked.dataset.tab;
+    operationsContent.forEach((el) =>
+        el.classList.remove("operations__content--active")
+    );
+
+    const neededContent = document
+        .querySelector(`.operations__content--${contentId}`)
+        .classList.add("operations__content--active");
+});
+
+// Menu fade animation
+const navEl = document.querySelector(".nav");
+// the difference between mouseover and mouseenter is that mouseover bubbles and mouseenter doesn't; the same goes in the other direction with mouseout and mouseleave;
+
+const handleHover = function (opacity, e) {
+    const link = e.target;
+    if (!link.classList.contains("nav__link")) return;
+
+    const links = link.closest(".nav__links");
+
+    links.querySelectorAll(".nav__link").forEach((el) => {
+        if (el !== link) el.style.opacity = opacity;
+    });
+};
+
+navEl.addEventListener("mouseover", handleHover.bind(navEl, 0.5));
+
+navEl.addEventListener("mouseout", handleHover.bind(navEl, 1));
+
+// Sticky navigtion INTERSECTIONOBSERVER;
+
+// This callback will get called each time that the observer element (our target element), is intersecting the root element at threshold that we defined.
+const obsCallback = function (entries, observer) {
+    // this function is called with two arguments: entries and the observer object itself.
+    entries.forEach((entry) => console.log(entry));
+};
+
+const obsOptions = {
+    // the root is the element that the target is intersecitng. if we set it to null, we'll observer the target to intersect with the entire viewport;
+    root: null,
+    // the threshold is the persentage of intersection at which the observer callback will be called. value could be an array of tresholds
+    // threshold: 0.1, // 10%
+    threshold: [0, 0.2],
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+// put target as parameter
+observer.observe(section1);
+
+// const h1 = document.querySelector("h1");
+// // Going downwards: child
+// console.log(h1.querySelectorAll(".highlight"));
+// console.log(h1.childNodes);
+// console.log(h1.children);
+// h1.firstElementChild.style.color = "red";
+// h1.lastElementChild.style.color = "orangered";
+
+// // Going upwards: parents
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+// h1.closest(".header").style.background = "var(--gradient-secondary)";
+
+// // Going sideways: siblings
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+
+// console.log(h1.parentElement.children);
