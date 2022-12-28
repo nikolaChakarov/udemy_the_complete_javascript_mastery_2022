@@ -16,7 +16,7 @@
 // execution context always containg three parts: VARIABLE ENVIRONMENT; SCOPE CHAIN; 'THIS' KEYWORD
 // HOISTING make some type of variables accessible/usable in the code before they are actually declared. "Variables lifted to the top of their scope"; Before execution, code is scanned for variable declarations, and for each variable, a new property is created in the VARIABLE ENVIRONMENT OBJECT;
 // FUCNTION DECLARATIONS: HOISTED; INIT VALUE = ACTUAL FUCNTION; SCOPE: BLOCK SCOPE(IN 'USE STRICT' MODE);
-// VAR ->  HOSTED; VALUE = UNDEFINED; SCOPE: FUNCTION SCOPE
+// VAR ->  HOISTED; VALUE = UNDEFINED; SCOPE: FUNCTION SCOPE
 // LET; CONST; -> NOT HOISTED; SCOPE: BLOCK SCOPE;
 // FUNCTION EXPRESSION AND AROW FUNCTION -> DEPENDS HOW ARE THEY DECLARED, WITH LET, CONST OR VAR; SAME RULES APPLY LIKE A VARIABLES;
 "use strict";

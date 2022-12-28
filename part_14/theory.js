@@ -33,3 +33,12 @@
 // ES6 Classes do NOT behave like classes in 'classical OOP'
 
 // 3. Object.create()
+
+// THIS KEY WORD;
+// THIS key word/variable: Special variable that is created for every execution context(every function); Take the value (points to) the 'owner' of the function in which the THIS key word is used;
+// THIS is not static! It depends on how the function is called, and its value is only assigned when the function is ACTUALLY CALLED;
+// 1. Method: THIS = object that is calling the method;
+// 2. Simple function call: THIS = UNDEFINED (IN STRICT MODE! OTHERWISE WINDOW IN THE BROWSER);
+// 3. Arrow function: THIS = THIS of surrounding function(lexical THIS);
+// 4. Event listener: THIS = DOM element that the handler is attached to;
+// !!! THIS does NOT point to the function itself, and also NOT the its variable environment!
