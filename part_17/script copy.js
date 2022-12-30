@@ -65,25 +65,3 @@ const ShoppingCard2 = (function () {
 
 ShoppingCard2.addToCart("milk", 5);
 console.log(ShoppingCard2);
-
-// we cannot use COMMON JS MODULES without MODULE BUNDLER;
-import cloneDeep from "./node_modules/lodash-es/cloneDeep.js";
-
-const state = {
-    cart: [
-        { product: "bread", quantity: 5 },
-        { product: "pizza", quantity: 3 },
-    ],
-    user: { loggedIn: true },
-};
-
-// const stateClone = Object.assign({}, state);
-// stateClone.user.loggedIn = false;
-
-// console.log(state);
-// console.log(stateClone);
-
-const stateCloneDeep = cloneDeep(state);
-stateCloneDeep.user.loggedIn = false;
-console.log(state);
-console.log(stateCloneDeep);

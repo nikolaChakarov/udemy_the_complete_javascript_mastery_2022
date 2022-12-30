@@ -6,3 +6,6 @@ Differices betweeen modules and scripts:
 in SCRIPTS on the other hand all top level variables are always global;
 2. ES Modules are always executed in strict mode;
 3. the THIS key word is always undefined at the top level while in SCRIPTS it points at the window;
+
+// COMMAND LINE;
+dir; cd; cls; mkdir; echo > filename; del filename; move filename foldername; rmdir foldername;
