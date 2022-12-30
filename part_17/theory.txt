@@ -1,0 +1,8 @@
+MODULES;
+Reusable piece of code that encapsulates implementation details; It is usualy a standalone file, but it doesn't have to be;
+Modules are stored in files, exactly one module per file;
+Differices betweeen modules and scripts:
+1. in modules all top level variables are scoped to the module; So basicaly variables are private to the module by default; And the only way an outside module can access a value that's inside of a module is by exporting that value;
+in SCRIPTS on the other hand all top level variables are always global;
+2. ES Modules are always executed in strict mode;
+3. the THIS key word is always undefined at the top level while in SCRIPTS it points at the window;
