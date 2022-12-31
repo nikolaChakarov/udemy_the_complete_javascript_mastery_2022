@@ -1,0 +1,18 @@
+Architecture;
+Business Logic; State; HTTP Library; Application Logic (Router); Presentation Logic (UI Layer);
+
+1. Business Logic: Code that solves the actual business problem; Directly related to what business does, and what business needs; Example: sending messages, storing transactions, calculating taxes...
+
+2. State: Essentially stores all the data about the application; Should be 'the single source of truth'; UI should be kept in sync with the state; State libraries exists - Redux...;
+
+3. HTTP Library: Responsible for making and receiving AJAX requests; Optional but almost always necessary in real-world apps;
+
+4. Application Logic (Router): Code that is only concerned about the implementation of application itself; Handles navigation and UI events;
+
+5. Presentation Logic (UI Layer): Code that is concerned about the visible part of the application; Essentially displays application state;
+
+// MVC - Model View Controller;
+
+Model: Businnes Logic; State; HTTP Library;
+View: Presentation Logic;
+Controller: Application Logic (Router); Bridge between the Model and the View (which don't know about one other);
